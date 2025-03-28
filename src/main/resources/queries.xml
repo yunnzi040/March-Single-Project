@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+    <query id="getAllClasses">
+        SELECT
+        *
+        FROM classes;
+    </query>
+
+    <query id="getClasses">
+        SELECT
+        *
+        FROM classes
+        WHERE class_code = ?
+    </query>
+
+    <query id="addClasses">
+        INSERT INTO classes (class_code, class_name, class_time, capacity, price, status, created_at)
+        VALUES (?, ?, ?, ?, ?, 0, now())
+    </query>
+
+    <query id="updateClasses">
+        UPDATE classes SET class_code = ?, class_name = ?, class_time = ?, capacity = ?, price = ?
+        WHERE status = 0;
+    </query>
+
+    <query id="deleteClasses">
+        DELETE FROM classes WHERE class_code = ?
+    </query>
+</queries>
