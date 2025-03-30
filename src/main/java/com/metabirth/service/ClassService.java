@@ -69,8 +69,11 @@ public class ClassService {
                 throw new IllegalArgumentException("이미 존재하는 수업입니다.");
             }
         }
-
-        return classesDao.addClasses(classes);
+        boolean result = classesDao.addClasses(classes);
+        if (result) {
+            throw new RuntimeException("추가하는 과정에서 오류가 발생되었습니다.");
+        }
+        return result;
     }
 
     // 수업 삭제
@@ -82,7 +85,7 @@ public class ClassService {
         }
 
         boolean result = classesDao.deleteClasses(class_code);
-        if (!result) {
+        if (result) {
             throw new SQLException("삭제하는 과정에서 오류가 발생되었습니다.");
         }
         return result;

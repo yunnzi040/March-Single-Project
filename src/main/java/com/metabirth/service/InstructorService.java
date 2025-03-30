@@ -91,7 +91,7 @@ public class InstructorService {
         // 확인이 끝난 후에는 boolean 타입으로 deleteInsructor(userId)를 실행시켜.
         boolean result = instructorsDao.deleteInstructor(Email);
         // 만약 삭제 결과가 false이라면 SQLException 예외를 던진다. ("삭제하는 과정에서 오류가 발생되었습니다.")
-        if (result) {
+        if (!result) {
             throw new SQLException("삭제하는 과정에서 오류가 발생되었습니다.");
         }
         // 삭제 수행 완료

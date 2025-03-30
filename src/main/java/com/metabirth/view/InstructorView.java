@@ -79,13 +79,13 @@ public class InstructorView {
     }
 
     public void registerInstructor() {
-        System.out.println("등록할 강사 이름을 입력해주세요.");
+        System.out.print("등록할 강사 이름을 입력해주세요.");
         String instructor_name = scanner.nextLine();
-        System.out.println("등록할 강사 번호를 입력해주세요. ex. 01012341234 ");
+        System.out.print("등록할 강사 번호를 입력해주세요. ex. 01012341234 ");
         String phone = scanner.nextLine();
-        System.out.println("등록할 강사 이메일을 입력해주세요. ex. abcd@example.com ");
+        System.out.print("등록할 강사 이메일을 입력해주세요. ex. abcd@example.com ");
         String email = scanner.nextLine();
-        System.out.println("등록할 강사 비밀번호를 입력해주세요. ");
+        System.out.print("등록할 강사 비밀번호를 입력해주세요. ");
         String password = scanner.nextLine();
 
         Instructors instructors = new Instructors(0, instructor_name, phone, (byte) 0, null, email, password);
@@ -159,7 +159,7 @@ public class InstructorView {
 
                             Instructors instructors1 = new Instructors(0, instructor_name, phone, (byte) 0, null, emailupdate, password);
 
-                            boolean result = instructorService.addInstructors(instructors1);
+                            boolean result = instructorService.updateInstructors(instructors1);
 
                             if (result){
                                 System.out.println("강사 정보 수정이 완료되었습니다.");
@@ -184,13 +184,13 @@ public class InstructorView {
         Instructors instructors = null;
 
         while (instructors == null) {
-            System.out.println("삭제를 원하는 강사의 이메일을 입력해주세요: ");
+            System.out.print("삭제를 원하는 강사의 이메일을 입력해주세요: ");
             String email = scanner.nextLine();
             instructors = instructorService.getInstructors(email);
 
             try {
                 if (instructors == null) {
-                    System.out.println("해당 강사가 존재하지 않습니다. 다시 입력해주세요.");
+                    System.out.print("해당 강사가 존재하지 않습니다. 다시 입력해주세요.");
                 } else {
                     System.out.println("강사 이름: " + instructors.getInstructor_name() +
                             "\n강사 핸드폰 번호: " + instructors.getPhone() +
@@ -216,6 +216,7 @@ public class InstructorView {
                     }
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new RuntimeException("강사 정보 삭제 중 오류가 발생하였습니다.");
             }
 

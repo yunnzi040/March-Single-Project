@@ -1,6 +1,7 @@
 package com.metabirth.dao;
 
 import com.metabirth.model.Instructors;
+import com.metabirth.model.Link;
 import com.mysql.cj.x.protobuf.MysqlxPrepare;
 
 import java.sql.*;
@@ -19,7 +20,7 @@ public class InstructorsDao {
     public List<Instructors> getAllInstructor() {
         List<Instructors> instructors = new ArrayList<>();
 
-        String sql = "SELECT * FROM instructors WHERE status = 0";
+        String sql = "SELECT * FROM instructors";
 
         try (PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -68,6 +69,34 @@ public class InstructorsDao {
         }
         return instructor;
     }
+
+    // 특정 강사들 정보 조회 (LinkService에서 사용)
+    public Instructors getInstructors(int instructorId) {
+        String sql = "SELECT * FROM instructors WHERE instructor_id = ? AND status = 0";
+        Instructors instructor = null;
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, instructorId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    instructor = new Instructors(
+                            rs.getInt("instructor_id"),
+                            rs.getString("instructor_name"),
+                            rs.getString("phone"),
+                            rs.getByte("status"),
+                            rs.getTimestamp("created_at").toLocalDateTime(),
+                            rs.getString("email"),
+                            rs.getString("password"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("getInstructors() 사용 중 오류 발생!");
+            e.printStackTrace();
+        }
+        return instructor;
+    }
+
 
 
     // 강사 추가

@@ -2,6 +2,7 @@ package com.metabirth.dao;
 
 import com.metabirth.model.Classes;
 import com.metabirth.model.Instructors;
+import com.metabirth.model.Link;
 import com.metabirth.util.QueryUtil;
 import com.mysql.cj.xdevapi.FindStatementImpl;
 
@@ -55,7 +56,7 @@ public class ClassesDao {
             ps.setString(1, classCode);
 
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+                while (rs.next()) {
                     classes = new Classes(
                             rs.getInt("class_id"),
                             rs.getString("class_code"),
@@ -73,6 +74,36 @@ public class ClassesDao {
         }
         return classes;
     }
+
+    // 특정 수업'들' 정보 조회
+    public List<Classes> getClassesByCode(String classCode){
+        List<Classes> classes = new ArrayList<>();
+        String query = QueryUtil.getQuery("getClasses");
+
+        try (PreparedStatement ps = connection.prepareStatement(query)){
+            ps.setString(1, classCode);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    classes.add(new Classes(
+                            rs.getInt("class_id"),
+                            rs.getString("class_code"),
+                            rs.getString("class_name"),
+                            rs.getString("class_time"),
+                            rs.getInt("capacity"),
+                            rs.getBigDecimal("price"),
+                            rs.getByte("status"),
+                            rs.getTimestamp("created_at").toLocalDateTime()
+                    ));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("getClassesById() 사용 중 오류 발생!");
+            e.printStackTrace();
+        }
+        return classes;
+    }
+
 
     // 수업 생성
     public boolean addClasses(Classes classes) {
