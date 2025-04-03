@@ -20,7 +20,7 @@
 
     <query id="updateClasses">
         UPDATE classes SET class_name = ?, class_time = ?, capacity = ?, price = ?
-        WHERE status = 0 AND class_code = ?
+        WHERE class_code = ?
     </query>
 
     <query id="deleteClasses">

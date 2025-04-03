@@ -1,6 +1,7 @@
 package com.metabirth.service;
 
 import com.metabirth.dao.InstructorsDao;
+import com.metabirth.model.Classes;
 import com.metabirth.model.Instructors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +65,12 @@ public class InstructorService {
     // 강사 정보 수정 (UPDATE)
     public boolean updateInstructors(Instructors instructor) throws SQLException {
 
+        // status 값이 0인 값만 수정할 수 있도록 함
+        Instructors instructors = instructorsDao.getInstructor(instructor.getEmail());
+        if (instructors.getStatus() == 1) {
+            throw new SQLException("해당 수업은 비활성화 되었습니다");
+        }
+
         // boolean 타입으로 user 객체로 수정할 수 있게 한다.
         boolean result = instructorsDao.updateInstuctor(instructor);
 
@@ -83,6 +90,12 @@ public class InstructorService {
         if (existing == null) {
             throw new IllegalArgumentException("삭제할 강사를 찾을 수 없습니다.");
         }
+
+        // status 값이 0인 값만 삭제할 수 있도록 함
+        if (existing.getStatus() == 1) {
+            throw new SQLException("해당 수업은 이미 비활성화 되었습니다");
+        }
+
         // 확인이 끝난 후에는 boolean 타입으로 deleteInsructor(userId)를 실행시켜.
         boolean result = instructorsDao.deleteInstructor(Email);
         // 만약 삭제 결과가 false이라면 SQLException 예외를 던진다. ("삭제하는 과정에서 오류가 발생되었습니다.")

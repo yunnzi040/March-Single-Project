@@ -1,8 +1,10 @@
 package com.metabirth.view;
 
+import com.metabirth.model.Classes;
 import com.metabirth.model.Instructors;
 import com.metabirth.service.InstructorService;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -79,6 +81,7 @@ public class InstructorView {
     }
 
     public void registerInstructor() {
+        System.out.println("--------------- 등록 시작 ---------------");
         System.out.print("등록할 강사 이름을 입력해주세요. : ");
         String instructor_name = scanner.nextLine();
         System.out.print("등록할 강사 번호를 입력해주세요. (ex. 010-1234-1234) : ");
@@ -87,23 +90,32 @@ public class InstructorView {
         String email = scanner.nextLine();
         System.out.print("등록할 강사 비밀번호를 입력해주세요. : ");
         String password = scanner.nextLine();
+        System.out.println("----------------------------------------");
+        System.out.print("강사 이름: " + instructor_name +
+                "\n강사 번호: " + phone +
+                "\n강사 이메일: " + email +
+                "\n강사 비밀번호: " + password +
+                "\n해당 강사 정보를 등록하시겠습니까? 1.등록 / 2.종료 : ");
+        int choice = scanner.nextInt();
 
-        Instructors instructors = new Instructors(0, instructor_name, phone, (byte) 0, null, email, password);
-
-        try {
-            boolean result = instructorService.addInstructors(instructors);
-            if (result){ // 등록 성공했을 뗴
-                System.out.println("강사 등록을 성공했습니다.");
-            } else {
-                System.out.println("강사 등록에 실패했습니다.");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("강사 등록 중 오류가 발생했습니다. ");
+        switch (choice) {
+            case 1:
+                try {
+                    Instructors instructors = new Instructors(0, instructor_name, phone, (byte) 0, null, email, password);
+                    boolean result = instructorService.addInstructors(instructors);
+                    if (result){ // 등록 성공했을 뗴
+                        System.out.println("강사 등록을 성공했습니다.");
+                    } else {
+                        System.out.println("강사 등록에 실패했습니다.");
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException("강사 등록 중 오류가 발생했습니다. ");
+                }
+                break;
+            case 2:
+                System.out.println("강사 등록을 취소하였습니다.");
+                break;
         }
-
-
-
-
     }
 
     private void getInstructorByEmail() {

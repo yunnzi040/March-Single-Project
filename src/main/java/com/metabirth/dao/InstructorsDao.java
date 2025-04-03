@@ -45,7 +45,7 @@ public class InstructorsDao {
 
     // Email을 사용한 특정 강사 정보 조회
     public Instructors getInstructor(String Email) {
-        String sql = "SELECT * FROM instructors WHERE email = ? AND status = 0";
+        String sql = "SELECT * FROM instructors WHERE email = ?";
         Instructors instructor = null;
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -123,7 +123,7 @@ public class InstructorsDao {
     // 강사 수정
     public boolean updateInstuctor(Instructors instructor) {
         String sql = "UPDATE instructors SET instructor_name = ?, phone = ?, password = ?\n" +
-                "WHERE email = ? AND status = 0";
+                "WHERE email = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, instructor.getInstructor_name());

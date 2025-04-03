@@ -117,8 +117,8 @@ public class ClassesView {
     public void getClassesBycode(){
         try {
             System.out.print("조회할 수업의 수업 코드를 입력해주세요.: ");
-            String class_code = scanner.nextLine();
-            Classes classes = classService.getClasses(class_code);
+            String classCode = scanner.nextLine();
+            Classes classes = classService.getClasses(classCode);
 
             if (classes == null) {
                 System.out.println("해당 수업이 존재하지 않습니다.");

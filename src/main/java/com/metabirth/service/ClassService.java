@@ -39,10 +39,7 @@ public class ClassService {
             log.error("해당 수업이 존재하지 않거나 오류가 발생했습니다.");
             return null;
         }
-
-        Classes classes1 = classesDao.getClasses(classCode);
-
-        if (classes1.getStatus() == 1) {
+        if (classes.getStatus() == 1) {
             log.error("해당 수업은 비활성화 되었습니다.");
             return null;
         }
@@ -56,6 +53,11 @@ public class ClassService {
         Classes existing = classesDao.getClasses(classes.getClassCode());
         if (existing == null) {
             throw new IllegalArgumentException("수정할 수업을 찾을 수 없습니다!");
+        }
+
+        // status 값이 0인 값만 수정할 수 있도록 함
+        if (existing.getStatus() == 1) {
+            throw new SQLException("해당 수업은 비활성화 되었습니다");
         }
 
         boolean result = classesDao.updateClasses(classes);
@@ -90,6 +92,10 @@ public class ClassService {
 
         if (classes == null) {
             throw new IllegalArgumentException("삭제할 강의를 찾을 수 없습니다.");
+        }
+        // status 값이 0인 값만 삭제할 수 있도록 함
+        if (classes.getStatus() == 1) {
+            throw new SQLException("해당 수업은 이미 비활성화 되었습니다");
         }
 
         boolean result = classesDao.deleteClasses(class_code);

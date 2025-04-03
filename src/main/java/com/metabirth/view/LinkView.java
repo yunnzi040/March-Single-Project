@@ -66,9 +66,9 @@ public class LinkView {
         System.out.print("강사 아이디를 입력해주세요.: ");
         int instructor_code = scanner.nextInt();
 
-        boolean result = linkService.assignInstructor(new Link(
-                class_code, instructor_code
-        ));
+        Link link = new Link(class_code, instructor_code);
+
+        boolean result = linkService.assignInstructor(link);
 
         try {
             if (result) {
@@ -110,7 +110,6 @@ public class LinkView {
 
     //강사의 배정 조회
     private void getClasses() {
-        // 지금은 아이디지만.. 이메일을 사용하고 싶어... ㅠㅠ
         System.out.print("조회하고 싶은 강사 아이디를 입력해주세요. : ");
         int instructorId = scanner.nextInt();
 
