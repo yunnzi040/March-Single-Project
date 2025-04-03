@@ -15,15 +15,15 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("\n===== LMS 관리 시스템 =====");
+            System.out.println("\n===== 메타벌스 강의 및 강사 배정 관리 시스템 =====");
             System.out.println("1. 강사(Instructor)관리");
-            System.out.println("2. 강의(Lesson) 관리");
+            System.out.println("2. 강의(Class) 관리");
             System.out.println("3. 배정(Assign) 관리");
             System.out.println("0. 종료");
             System.out.print("선택: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // 개행 문자 처리
+            scanner.nextLine();
 
             switch (choice) {
                 case 1 -> startInstructorManagement(connection);

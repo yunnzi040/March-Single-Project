@@ -39,7 +39,7 @@ public class LinkDao {
             System.out.println("assignInstructor() 사용 중 오류 발생!");
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     //2. 강사를 특정 수업에서 해제하기 (물리적 삭제 DELETE)

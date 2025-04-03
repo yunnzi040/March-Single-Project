@@ -49,8 +49,8 @@ public class ClassesDao {
 
     // 특정 수업 조회
     public Classes getClasses(String classCode) {
-        String query = QueryUtil.getQuery("getClasses"); // XML에서 쿼리 로드
         Classes classes = null;
+        String query = QueryUtil.getQuery("getClasses"); // XML에서 쿼리 로드
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, classCode);
@@ -129,18 +129,19 @@ public class ClassesDao {
     // 수업 수정
     public boolean updateClasses(Classes classes) {
         String query = QueryUtil.getQuery("updateClasses");
-        try (PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
-            ps.setString(1, classes.getClassCode());
-            ps.setString(2, classes.getClassName());
-            ps.setString(3, classes.getClassTime());
-            ps.setInt(4, classes.getCapacity());
-            ps.setBigDecimal(5, classes.getPrice());
-
+        try (PreparedStatement ps = connection.prepareStatement(query)){
+            ps.setString(1, classes.getClassName());
+            ps.setString(2, classes.getClassTime());
+            ps.setInt(3, classes.getCapacity());
+            ps.setBigDecimal(4, classes.getPrice());
+            ps.setString(5, classes.getClassCode());
+            // SQL 실행 후 영향을 받은 행의 개수를 반환
             int affectedRows = ps.executeUpdate();
+            // 행의 개수를 반환했을 때 0보다 크면 true를 반환
             return affectedRows > 0;
 
         } catch (Exception e) {
-            System.out.println("addClasses() 사용 중 오류 발생!");
+            System.out.println("updateClasses() 사용 중 오류 발생!");
             e.printStackTrace();
         }
 

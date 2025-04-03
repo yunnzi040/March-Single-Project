@@ -91,7 +91,7 @@ public class Classes {
 
     @Override
     public String toString() {
-        return "수업[" +
+        return "[" +
                 "수업 번호= " + classId +
                 ", 수업 코드= '" + classCode + '\'' +
                 ", 수업 이름= '" + className + '\'' +
@@ -100,6 +100,6 @@ public class Classes {
                 ", 수업 가격= " + price +
                 ", 수업 여부= " + status +
                 ", 수업 생성일= " + createdAt +
-                '}';
+                ']';
     }
 }

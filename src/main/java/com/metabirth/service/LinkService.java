@@ -45,6 +45,17 @@ public class LinkService {
                 throw new RuntimeException("이미 해당 수업에 해당 강사가 배정되었습니다.");
             }
         }
+
+        // 만약 link의 instructorId를 가진 강사의 status가 1일 경우 오류 발생
+       if (instructorsDao.getInstructors(link.getInstructorId()).getStatus() == 1 ){
+           throw new RuntimeException("해당 강사는 비활성화되었습니다.");
+        }
+
+        // 만약 link의 classCode를 가진 수업의 status가 1일 경우 오류 발생
+        if ((classesDao.getClasses(link.getClassCode())).getStatus() == 1 ){
+            throw new RuntimeException("해당 수업은 비활성화되었습니다.");
+        }
+
         boolean result = linkDao.assignInstructor(link.getInstructorId(), link.getClassCode());
         if (!result) {
             throw new RuntimeException("배정하는 과정에서 오류가 발생했습니다");

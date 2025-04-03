@@ -79,14 +79,14 @@ public class Instructors {
 
     @Override
     public String toString() {
-        return "classes{" +
-                "instructor_id=" + instructor_id +
-                ", instructor_name='" + instructor_name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", status=" + status +
-                ", created_at=" + created_at +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "[" +
+                "강사 ID =" + instructor_id +
+                ", 강사 이름 ='" + instructor_name + '\'' +
+                ", 번호 ='" + phone + '\'' +
+                ", 소속 여부 =" + status +
+                ", 가입 일시 =" + created_at +
+                ", 이메일 ='" + email + '\'' +
+                ", 비밀번호 ='" + password + '\'' +
+                ']';
     }
 }

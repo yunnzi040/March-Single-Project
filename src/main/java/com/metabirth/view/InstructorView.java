@@ -60,7 +60,7 @@ public class InstructorView {
         //userService의 'getAllUsers()' 메서드를 호출하면 sql 결과를 담을 리스트가 있어야 하는데
         // User 타입의 users 이름인 리스트를 만들어 여기에 넣어준다.
         List<Instructors> instructors = instructorService.getAllInstructors();
-        // try-catch문을 사용해서 만약 리스트의 값이 비어있다면
+        // try-catch 문을 사용해서 만약 리스트의 값이 비어있다면
         try {
             if (instructors.isEmpty()) {
                 // 등록된 사용자가 없다고 알리기
@@ -79,13 +79,13 @@ public class InstructorView {
     }
 
     public void registerInstructor() {
-        System.out.print("등록할 강사 이름을 입력해주세요.");
+        System.out.print("등록할 강사 이름을 입력해주세요. : ");
         String instructor_name = scanner.nextLine();
-        System.out.print("등록할 강사 번호를 입력해주세요. ex. 01012341234 ");
+        System.out.print("등록할 강사 번호를 입력해주세요. (ex. 010-1234-1234) : ");
         String phone = scanner.nextLine();
-        System.out.print("등록할 강사 이메일을 입력해주세요. ex. abcd@example.com ");
+        System.out.print("등록할 강사 이메일을 입력해주세요. (ex. abcd@example.com) : ");
         String email = scanner.nextLine();
-        System.out.print("등록할 강사 비밀번호를 입력해주세요. ");
+        System.out.print("등록할 강사 비밀번호를 입력해주세요. : ");
         String password = scanner.nextLine();
 
         Instructors instructors = new Instructors(0, instructor_name, phone, (byte) 0, null, email, password);
@@ -127,7 +127,6 @@ public class InstructorView {
 
     // 강사 정보 수정
     public void updateInstructor() {
-        // 우선 정보 수정은 한번 하면 다 하는 걸로 해놓고 시간 남으면 쪼개기
         Instructors instructors = null;
 
         while (instructors == null) {
@@ -138,43 +137,45 @@ public class InstructorView {
 
                 if (instructors == null) {
                     System.out.println("해당 강사가 존재하지 않습니다. 다시 입력해주세요.");
-                } else {
-                    System.out.println("강사 이름: " + instructors.getInstructor_name() +
-                            "\n강사 핸드폰 번호: " + instructors.getPhone() +
-                            "\n강사 이메일: " + instructors.getEmail() +
-                            "\n강사 비밀번호: " + instructors.getPassword() +
-                            "\n해당 강사 정보를 수정하시겠습니까? 1.수정 / 2.종료");
-
-                    switch (scanner.nextInt()) {
-                        case 1:
-                            scanner.nextLine();
-                            System.out.print("수정할 강사 이름을 입력해주세요. ");
-                            String instructor_name = scanner.nextLine();
-                            System.out.print("수정할 강사 번호를 입력해주세요. ex. 010-1234-1234 ");
-                            String phone = scanner.nextLine();
-                            System.out.print("수정할 강사 이메일을 입력해주세요. ex. abcd@example.com ");
-                            String emailupdate = scanner.nextLine();
-                            System.out.print("수정할 강사 비밀번호를 입력해주세요.");
-                            String password = scanner.nextLine();
-
-                            Instructors instructors1 = new Instructors(0, instructor_name, phone, (byte) 0, null, emailupdate, password);
-
-                            boolean result = instructorService.updateInstructors(instructors1);
-
-                            if (result){
-                                System.out.println("강사 정보 수정이 완료되었습니다.");
-                            } else {
-                                System.out.println("강사 정보 수정에 실패하였습니다.");
-                            }
-                            break;
-
-                        case 2:
-                            System.out.println("강사 정보 수정을 종료합니다.");
-                            break;
-                    }
+                    continue;
                 }
+
+                // 강사가 존재하면 정보 출력
+                System.out.println("강사 이름: " + instructors.getInstructor_name() +
+                        "\n강사 핸드폰 번호: " + instructors.getPhone() +
+                        "\n강사 이메일: " + instructors.getEmail() +
+                        "\n강사 비밀번호: " + instructors.getPassword() +
+                        "\n해당 강사 정보를 수정하시겠습니까? 1.수정 / 2.종료");
+
+                switch (scanner.nextInt()) {
+                    case 1:
+                        scanner.nextLine();
+                        System.out.print("수정할 강사 이름을 입력해주세요. : ");
+                        String instructor_name = scanner.nextLine();
+                        System.out.print("수정할 강사 번호를 입력해주세요. (ex. 010-1234-1234) : ");
+                        String phone = scanner.nextLine();
+                        System.out.print("수정할 강사 비밀번호를 입력해주세요. : ");
+                        String password = scanner.nextLine();
+
+                        Instructors instructors1 = new Instructors(0, instructor_name,
+                                phone, (byte) 0, null, email, password);
+
+                        boolean result = instructorService.updateInstructors(instructors1);
+
+                        if (result){
+                            System.out.println("강사 정보 수정이 완료되었습니다.");
+                        } else {
+                            System.out.println("강사 정보 수정에 실패하였습니다.");
+                        }
+                        break;
+                    case 2:
+                        System.out.println("강사 정보 수정을 종료합니다.");
+                        break;
+                }
+
             } catch (Exception e) {
-                throw new RuntimeException("강사 정보 수정 중 오류가 발생하였습니다.");
+                //throw new RuntimeException("강사 정보 수정 중 오류가 발생하였습니다.");
+                e.printStackTrace();
             }
         }
     }
@@ -200,10 +201,7 @@ public class InstructorView {
 
                     switch (scanner.nextInt()) {
                         case 1:
-                            scanner.nextLine();
-                            System.out.print("삭제할 강사의 이메일을 입력해주세요: ");
-                            String emaildelete = scanner.nextLine();
-                            boolean result = instructorService.deleteInstructors(emaildelete);
+                            boolean result = instructorService.deleteInstructors(email);
                             if (result){
                                 System.out.println("강사 정보 삭제가 성공되었습니다.");
                             } else {

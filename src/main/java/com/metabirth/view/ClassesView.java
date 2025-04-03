@@ -29,8 +29,8 @@ public class ClassesView {
         while (true) {
             System.out.println("\n===== 수업 관리 시스템 =====");
             System.out.println("1. 전체 수업 조회");
-            System.out.println("2. 수업 등록");
-            System.out.println("3. 수업 조회 (수업코드)");
+            System.out.println("2. 수업 조회 (수업 코드)");
+            System.out.println("3. 수업 등록");
             System.out.println("4. 수업 정보 수정");
             System.out.println("5. 수업 삭제");
             System.out.println("0. 종료");
@@ -41,8 +41,8 @@ public class ClassesView {
 
             switch (choice) {
                 case 1 -> getAllClasses();
-                case 2 -> registerClasses();
-                case 3 -> getClassesBycode();
+                case 2 -> getClassesBycode();
+                case 3 -> registerClasses();
                 case 4 -> updateClasses();
                 case 5 -> deleteClasses();
                 case 0 -> {
@@ -69,36 +69,48 @@ public class ClassesView {
             }
         } catch (Exception e) {
             System.out.println("강의 목록을 조회하는 중 오류가 발생했습니다. ");
-            e.printStackTrace();
         }
     }
 
     public void registerClasses(){
-        // 수업 번호가 중복이면 안된다. 입력된 수업 번호가 기존 DB에 있는지 확인하기
-        System.out.print("등록할 수업 번호를 입력해주세요: ");
+        System.out.println("--------------- 등록 시작 ---------------");
+        System.out.print("수업 코드를 입력해주세요: ");
         String classCode = scanner.nextLine();
-        System.out.print("등록할 수업 제목을 입력해주세요. ex. 수학1  : ");
+        System.out.print("수업 이름을 입력해주세요. (ex. 알고리즘 기초)  : ");
         String className = scanner.nextLine();
-        System.out.print("등록할 수업 시간을 입력해주세요. ex. 월수금 10:00-12:00 : ");
+        System.out.print("수업 시간을 입력해주세요. (ex. 월수금 10:00 - 12:00) : ");
         String classTime = scanner.nextLine();
-        System.out.print("등록할 수업의 인원을 입력해주세요. ex. 10 : ");
+        System.out.print("수업 인원을 입력해주세요. (ex. 10) : ");
         int capacity = Integer.parseInt(scanner.nextLine());
-        System.out.print("등록할 수업 가격을 입력해주세요. ex. 35000 : ");
+        System.out.print("수업 가격을 입력해주세요. (ex. 35000) : ");
         BigDecimal price = new BigDecimal(scanner.nextLine());
+        System.out.println("----------------------------------------");
+        System.out.print("수업 이름: " + className +
+                "\n수업 코드: " + classCode +
+                "\n수업 시간: " + classTime +
+                "\n수업 인원: " + capacity +
+                "\n수업 비용: " + price +
+                "\n해당 수업 정보를 등록하시겠습니까? 1.등록 / 2.종료 : ");
+        int choice = scanner.nextInt();
 
-        boolean result = classService.addClasses(new Classes(
-                0, classCode, className, classTime, capacity, price, (byte) 0, null)
-        );
-
-        try {
-            if(result){
-                System.out.println("수업 등록이 완료되었습니다.");
-            } else {
-                System.out.println("수업 등록이 실패되었습니다.");
-            }
-        }
-        catch (Exception e) {
-            System.out.println("수업 등록 중 오류가 발생했습니다!");
+        switch (choice) {
+            case 1:
+                try {
+                    boolean result = classService.addClasses(new Classes(
+                            0, classCode, className, classTime, capacity, price, (byte) 0, null));
+                    if(result){
+                        System.out.println("수업 등록이 완료되었습니다.");
+                    } else {
+                        System.out.println("수업 등록이 실패되었습니다.");
+                    }
+                }
+                catch (Exception e) {
+                    System.out.println("수업 등록 중 오류가 발생했습니다!");
+                }
+                break;
+            case 2:
+                System.out.println("수업 등록을 취소하였습니다.");
+                break;
         }
     }
 
@@ -141,20 +153,16 @@ public class ClassesView {
                     switch (scanner.nextInt()) {
                         case 1:
                             scanner.nextLine();
-                            System.out.print("수정할 수업 코드를 입력해주세요: ");
-                            String class_code_up = scanner.nextLine();
-                            System.out.print("수정할 수업 제목을 입력해주세요. ex. 수학1 : ");
+                            System.out.print("수정할 수업 제목을 입력해주세요. (ex. 수학1) : ");
                             String class_name = scanner.nextLine();
-                            System.out.print("수정할 수업 시간을 입력해주세요. ex. 월수금 10:00-12:00 : ");
+                            System.out.print("수정할 수업 시간을 입력해주세요. (ex. 월수금 10:00 - 12:00) : ");
                             String class_time = scanner.nextLine();
-                            System.out.print("수정할 수업의 인원을 입력해주세요. ex. 10 : ");
+                            System.out.print("수정할 수업의 인원을 입력해주세요. (ex. 10) : ");
                             int capacity = Integer.parseInt(scanner.nextLine());
-                            System.out.print("수정할 수업 비용을 입력해주세요. ex. 35000 : ");
+                            System.out.print("수정할 수업 비용을 입력해주세요. (ex. 35000) : ");
                             BigDecimal price = new BigDecimal(scanner.nextLine());
 
-                            Classes classes1 = new Classes(0, class_code_up, class_name, class_time, capacity, price, (byte) 0, null);
-
-                            boolean result = classService.updateClasses(classes1);
+                            boolean result = classService.updateClasses(new Classes(0, class_code, class_name, class_time, capacity, price, (byte) 0, null));
 
                             if (result) {
                                 System.out.println("수업 정보 수정이 완료되었습니다.");
@@ -178,6 +186,7 @@ public class ClassesView {
         Classes classes = null;
 
         while (classes == null) {
+            System.out.println("\n====== 수업 삭제 ========");
             System.out.print("삭제할 수업의 수업 코드를 입력해주세요.: ");
             String class_code = scanner.nextLine();
 
@@ -187,6 +196,7 @@ public class ClassesView {
                if (classes == null) {
                    System.out.println("해당 수업이 존재하지 않습니다.");
                } else {
+                   System.out.println("\n====== 수업 존재 확인 =======");
                    System.out.println("수업 코드: " + classes.getClassCode() +
                            "\n수업 제목: " + classes.getClassName() +
                            "\n수업 시간: " + classes.getClassTime() +

@@ -10,7 +10,7 @@
         SELECT
         *
         FROM classes
-        WHERE class_code = ?
+        WHERE class_code = ?;
     </query>
 
     <query id="addClasses">
@@ -19,18 +19,18 @@
     </query>
 
     <query id="updateClasses">
-        UPDATE classes SET class_code = ?, class_name = ?, class_time = ?, capacity = ?, price = ?
-        WHERE status = 0
+        UPDATE classes SET class_name = ?, class_time = ?, capacity = ?, price = ?
+        WHERE status = 0 AND class_code = ?
     </query>
 
     <query id="deleteClasses">
-        UPDATE instructor_class SET status = 0
+        UPDATE classes SET status = 1
         WHERE class_code = ?
     </query>
 
     <query id="assignInstructor">
-        INSERT INTO instructor_class (instructor_id, class_code)
-        VALUES (?, ?)
+        INSERT IGNORE INTO instructor_class VALUES (?, ?);
+
     </query>
 
     <query id="cancelInstructor">

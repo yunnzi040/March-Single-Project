@@ -16,11 +16,11 @@ public class InstructorsDao {
         this.connection = connection;
     }
 
-    // 전체 강사 목록 조회 (SELECT - READ)
+    // 전체 강사 정보 조회
     public List<Instructors> getAllInstructor() {
         List<Instructors> instructors = new ArrayList<>();
 
-        String sql = "SELECT * FROM instructors";
+        String sql = "SELECT * FROM instructors ";
 
         try (PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -43,7 +43,7 @@ public class InstructorsDao {
         return instructors;
     }
 
-    // 특정 강사 정보 조회
+    // Email을 사용한 특정 강사 정보 조회
     public Instructors getInstructor(String Email) {
         String sql = "SELECT * FROM instructors WHERE email = ? AND status = 0";
         Instructors instructor = null;
@@ -70,9 +70,9 @@ public class InstructorsDao {
         return instructor;
     }
 
-    // 특정 강사들 정보 조회 (LinkService에서 사용)
+    // instructor_id를 사용한 특정 강사 정보 조회 (LinkService에서 사용)
     public Instructors getInstructors(int instructorId) {
-        String sql = "SELECT * FROM instructors WHERE instructor_id = ? AND status = 0";
+        String sql = "SELECT * FROM instructors WHERE instructor_id = ?";
         Instructors instructor = null;
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -122,15 +122,14 @@ public class InstructorsDao {
 
     // 강사 수정
     public boolean updateInstuctor(Instructors instructor) {
-        String sql = "UPDATE users SET instructor_name = ?, phone = ?, email = ?, password = ?\n" +
-                "WHERE user_id = ? AND status = 0";
+        String sql = "UPDATE instructors SET instructor_name = ?, phone = ?, password = ?\n" +
+                "WHERE email = ? AND status = 0";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, instructor.getInstructor_name());
             ps.setString(2, instructor.getPhone());
-            ps.setString(3, instructor.getEmail());
-            ps.setString(4, instructor.getPassword());
-            ps.setInt(5, instructor.getInstructor_id());
+            ps.setString(3, instructor.getPassword());
+            ps.setString(4, instructor.getEmail());
 
             int affectedRows = ps.executeUpdate();
             return affectedRows > 0;
@@ -139,7 +138,7 @@ public class InstructorsDao {
             System.out.println("updateUser() 사용 중 오류 발생");
             e.printStackTrace();
         }
-        return false;
+        return true;
     }
 
     // 강사 삭제 (status = 1 상태로 변경)
@@ -157,6 +156,6 @@ public class InstructorsDao {
             System.out.println("deleteInstructor() 사용 중 오류 발생");
             e.printStackTrace();
         }
-        return false;
+        return true;
     }
 }

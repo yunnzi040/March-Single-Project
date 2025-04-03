@@ -63,13 +63,8 @@ public class InstructorService {
 
     // 강사 정보 수정 (UPDATE)
     public boolean updateInstructors(Instructors instructor) throws SQLException {
-        // 수정하고 싶은 강사가 존재하는지 확인 (이메일로?)
-        Instructors existing = getInstructors(instructor.getEmail());
-        // 만약 해당 강사가 존재하지 않는다면 IllegalArgumentException 예외를 던진다. ("수정할 강사를 찾을 수 없습니다.")
-        if (existing == null) {
-            throw new IllegalArgumentException("수정할 강사를 찾을 수 없습니다.");
-        }
-        // 확인이 끝난 후에는 boolean 타입으로 user 객체로 수정할 수 있게 한다.
+
+        // boolean 타입으로 user 객체로 수정할 수 있게 한다.
         boolean result = instructorsDao.updateInstuctor(instructor);
 
         // 만약 업데이트 결과가 false이라면 SQLException 예외를 던진다. ("수정하는 과정에서 오류가 발생되었습니다.")
