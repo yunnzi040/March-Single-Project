@@ -1,4 +1,4 @@
-# Java 기반 CRUD 프로젝트 (메타버스 아카데미 관리 프로그램)
+# Java 기반 CRUD 프로젝트
 
 ## 1. 프로젝트 개요
 
@@ -33,11 +33,12 @@
 - 하나의 수업도 여러 명의 강사가 담당할 수 있음
 - 이를 효과적으로 관리하기 위해 **중간 테이블(`instructor_class`)을 활용**하여 **강사와 수업 간의 연결을 관리**
 
-#### ERD (Entity-Relationship Diagram)
-**전체 ERD**
+### ERD (Entity-Relationship Diagram)
+
+전체 ERD
 ![Image](https://github.com/user-attachments/assets/f7cc3a4e-98c6-4e35-8521-f50c87ecfcd7)
 
-**담당 ERD**
+담당 ERD
 ![Image](https://github.com/user-attachments/assets/9771e17d-a8d3-4f50-8f21-e611132913ea)
 
 #### 테이블 설명
@@ -63,8 +64,10 @@
 ### 강사 관리
 - 강사 등록
   <img width="2272" alt="Image" src="https://github.com/user-attachments/assets/3b698145-21c3-49cb-87dd-c9dbd9175777" />
+  
 - 강사 삭제
   <img width="2272" alt="Image" src="https://github.com/user-attachments/assets/b1175e54-7c8d-4994-8aa6-b9491f149f4f" />
+  
 - 전체 강사 조회
   <img width="2272" alt="Image" src="https://github.com/user-attachments/assets/06739a33-f393-42f5-b143-bc91106a3c45" />
 - 특정 강사 조회
