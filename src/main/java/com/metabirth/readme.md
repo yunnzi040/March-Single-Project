@@ -45,7 +45,7 @@
 
 **강사 테이블 (`instructors`)**
 - 강사 정보를 저장하는 테이블
-- `instructor_id` (PK), `instructor_name`, `email`, `phone` 등의 컬럼 포함
+- `instructor_id` (PK), `instructor_name`, `email` (Unique), `phone` 등의 컬럼 포함
 
 **수업 테이블 (`classes`)**
 - 수업 정보를 저장하는 테이블
